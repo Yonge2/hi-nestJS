@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Q
 import { Movie } from './entities/movies.entity';
 import { MoviesService } from './movies.service';
 import { NotFoundError } from 'rxjs';
+import { CreateMoiveDTO } from './dto/create-movie.dto';
+import { UpdateMoiveDTO } from './dto/update-movie.dte';
 
 //url의 entryPoint를 관리함. 예를 들어 여기는 localhost:3000/movies/ 로 관리됨.
 @Controller('movies')
@@ -18,7 +20,7 @@ export class MoviesController {
     }
 
     @Get('/:id')
-    getOne(@Param('id') movieId:string){
+    getOne(@Param('id') movieId:number){
         const movie =  this.moivesService.getOne(movieId);
         if(!movie){
             throw new NotFoundException("Not Found Moive ID")
@@ -26,17 +28,17 @@ export class MoviesController {
         return movie;
     }
     @Post()
-    create(@Body() movieData){
+    create(@Body() movieData: CreateMoiveDTO){
         this.moivesService.create(movieData);
     }
     @Delete('/:id')
-    remove(@Param('id') movieId:string){
+    remove(@Param('id') movieId:number){
         this.getOne(movieId);
         this.moivesService.delete(movieId);
     }
     //일부 리소스만 업데이트 전체 업데이트는 put
     @Patch('/:id')
-    patch(@Param('id') movieId:string, @Body() updateData){
+    patch(@Param('id') movieId:number, @Body() updateData: UpdateMoiveDTO){
         return this.moivesService.update(movieId, updateData);
     }
 }
