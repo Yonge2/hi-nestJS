@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('app')
+@Controller('')
 export class AppController {
     //req, res 사용하는 방법 (express에 접근)
     //@Get()
